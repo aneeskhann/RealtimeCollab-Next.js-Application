@@ -1,0 +1,21 @@
+# Node modules
+node_modules/
+
+# Logs
+logs/
+*.log
+
+# Env files
+.env
+.env.local
+
+# System files
+.DS_Store
+
+# Compiled output
+dist/
+build/
+
+# Editor directories
+.vscode/
+.idea/

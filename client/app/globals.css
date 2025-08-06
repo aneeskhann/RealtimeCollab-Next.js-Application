@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+:root {
+  --background: 215 40% 96%; /* Slightly blue-tinted off-white */
+  --foreground: 222.2 47.4% 11.2%; /* Standard readable dark text */
+
+  --card: 0 0% 100%; /* White cards */
+  --card-foreground: 222.2 47.4% 11.2%;
+
+  --popover: 214 40% 98%; /* Slight blue for hover/focus menus */
+  --popover-foreground: 222.2 47.4% 11.2%;
+
+  --primary: 221.2 83.2% 53.3%; /* Branded blue */
+  --primary-foreground: 210 40% 98%;
+
+  --secondary: 215 50% 94%; /* Light blue-tinted background */
+  --secondary-foreground: 222.2 47.4% 11.2%;
+
+  --muted: 214 30% 90%; /* For alerts, subtle sections */
+  --muted-foreground: 222.2 25% 30%;
+
+  --accent: 213 45% 92%; /* Slightly elevated blue */
+  --accent-foreground: 222.2 47.4% 11.2%;
+
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+
+  --border: 215 28% 80%; /* More visible border for separation */
+  --input: 215 28% 80%;
+
+  --ring: 221.2 83.2% 65%; /* Active state glow: brand blue */
+  --radius: 0.5rem;
+}
+
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 84% 4.9%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 94.1%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground transition-colors duration-300;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply backdrop-blur-xl bg-white/10 dark:bg-black/10 border border-white/20 dark:border-white/10 rounded-2xl shadow-2xl;
+  }
+
+  .glass-effect {
+    @apply backdrop-blur-md bg-white/10 dark:bg-black/10 border border-white/20 dark:border-white/10;
+  }
+
+  .gradient-bg {
+    @apply bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-300;
+  }
+
+  .neuro-card {
+    background: linear-gradient(145deg, #f0f0f0, #cacaca);
+    box-shadow: 8px 8px 16px rgba(163, 177, 198, 0.6), -8px -8px 16px rgba(255, 255, 255, 0.5);
+    @apply rounded-2xl transition-all duration-300;
+  }
+
+  .dark .neuro-card {
+    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+    box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.4), -8px -8px 16px rgba(255, 255, 255, 0.05);
+  }
+
+  .minimal-grid {
+    @apply grid gap-6 p-6;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}
+
+/* Ensure smooth transitions for theme changes */
+html {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+/* Force theme transitions */
+* {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
