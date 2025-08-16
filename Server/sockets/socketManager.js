@@ -11,6 +11,7 @@ export const registerSocketHandlers = (io, socket) => {
       socket.join(roomCode)
 
       socket.data.user = user // ✅ Cache user
+      socket.data.roomCode = roomCode // Cache room code
 
       const exists = room.participants.some(
         (p) => p.userId.toString() === user.id
@@ -74,14 +75,63 @@ export const registerSocketHandlers = (io, socket) => {
     }
   })
 
+  // WebRTC Signaling Events
+  socket.on("webrtc-offer", ({ roomCode, targetUserId, offer }) => {
+    try {
+      // Forward the offer to the target user
+      socket.to(roomCode).emit("webrtc-offer", {
+        fromUserId: socket.data.user?.id,
+        offer
+      })
+      console.log(`📤 WebRTC offer from ${socket.data.user?.username} to ${targetUserId}`)
+    } catch (err) {
+      console.error("❌ webrtc-offer error:", err)
+    }
+  })
+
+  socket.on("webrtc-answer", ({ roomCode, targetUserId, answer }) => {
+    try {
+      // Forward the answer to the target user
+      socket.to(roomCode).emit("webrtc-answer", {
+        fromUserId: socket.data.user?.id,
+        answer
+      })
+      console.log(`📤 WebRTC answer from ${socket.data.user?.username} to ${targetUserId}`)
+    } catch (err) {
+      console.error("❌ webrtc-answer error:", err)
+    }
+  })
+
+  socket.on("ice-candidate", ({ roomCode, targetUserId, candidate }) => {
+    try {
+      // Forward the ICE candidate to the target user
+      socket.to(roomCode).emit("ice-candidate", {
+        fromUserId: socket.data.user?.id,
+        candidate
+      })
+      console.log(`📤 ICE candidate from ${socket.data.user?.username} to ${targetUserId}`)
+    } catch (err) {
+      console.error("❌ ice-candidate error:", err)
+    }
+  })
+
   socket.on("disconnect", () => {
     console.log(`❌ [SOCKET] Disconnected: ${socket.id}`)
 
     const username = socket.data.user?.username
     const userId = socket.data.user?.id
+    const roomCode = socket.data.roomCode
 
-    if (username && userId) {
-      console.log(`🛑 User ${username} (${userId}) disconnected`)
+    if (username && userId && roomCode) {
+      console.log(`🛑 User ${username} (${userId}) disconnected from room ${roomCode}`)
+      
+      // Notify other users in the room
+      socket.to(roomCode).emit("user-left", {
+        user: {
+          id: userId,
+          username,
+        },
+      })
     }
   })
 }
