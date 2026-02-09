@@ -70,20 +70,11 @@ RTC/
    npm install
    ```
 
-3. **Create environment file:**
-   Create `.env` file in the Server directory:
-   ```env
-   PORT=5000
-   MONGODB_URI=mongodb://localhost:27017/rtc-app
-   JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
-   CLIENT_URL=http://localhost:3000
-   NODE_ENV=development
-   ```
 
-4. **Start MongoDB:**
+3. **Start MongoDB:**
    Make sure MongoDB is running on your system.
 
-5. **Start the server:**
+4. **Start the server:**
    ```bash
    npm run dev
    ```
@@ -209,21 +200,8 @@ RTC/
 - Create corresponding services in `Server/services/`
 - Update frontend services in `client/services/`
 
-## 📝 Environment Variables
 
-### Backend (.env)
-```env
-PORT=5000
-MONGODB_URI=mongodb://localhost:27017/rtc-app
-JWT_SECRET=your-secret-key
-CLIENT_URL=http://localhost:3000
-NODE_ENV=development
-```
 
-### Frontend (.env.local)
-```env
-NEXT_PUBLIC_API_URL=http://localhost:5000/api
-```
 
 ## 🐛 Troubleshooting
 
